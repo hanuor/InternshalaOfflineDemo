@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent"
+
+    tools:context="com.hanuor.demointernshala.MainActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_margin="11dp"
+        android:layout_height="match_parent">
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="#212121"
+    android:inputType="text"
+    android:textStyle="bold"
+    android:id="@+id/tV"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/eT"
+            android:textColor="#424242"
+            android:hint="Type your answer here"
+            android:textColorHint="#bdbdbd"
+            android:layout_below="@+id/tV"
+            android:layout_marginTop="3dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#2196F3"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/eT"
+            android:text="Apply"
+            android:id="@+id/apply"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_margin="11dp"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>
