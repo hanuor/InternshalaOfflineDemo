@@ -17,10 +17,25 @@ package com.hanuor.demointernshala;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Servicer extends Service {
+    Internal internal;
+    SaveOfflineData offlineData;
+    public static final long NOTIFY_INTERVAL = 1000; // 10 seconds
+
+    // run on another Thread to avoid crash
+    private Handler mHandler = new Handler();
+    // timer handling
+    private Timer mTimer = null;
+    ArrayList<Caller> callerArrayList;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -35,6 +50,42 @@ public class Servicer extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        
+        Log.d("Nakedand","Dumbtss");
+        offlineData = new SaveOfflineData(getApplicationContext());
+        callerArrayList = offlineData.ForKey("apply");
+
+        internal = new Internal(getApplicationContext());
+        if (mTimer != null) {
+            mTimer.cancel();
+        } else {
+            // recreate new
+            mTimer = new Timer();
+        }
+        // schedule task
+        mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 0, NOTIFY_INTERVAL);
+
     }
+    class TimeDisplayTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            // run on another thread
+
+            mHandler.post(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    if(internal.isNetworkAvailable()){
+                        Log.d("Nakedand","All the lights");
+                        
+                        internal.start();
+                    }
+
+                                 }
+
+            });
+        }
+
+    }
+
 }

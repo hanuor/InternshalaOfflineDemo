@@ -1,5 +1,6 @@
 package com.hanuor.demointernshala;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,11 +28,16 @@ public class MainActivity extends AppCompatActivity {
     EditText catureInput;
     Button apply;
     SaveOfflineData offlineData;
+    Internal internal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent serviceIntent = new Intent(MainActivity.this, Servicer.class);
+        // Start service
+        startService(serviceIntent);
+        internal = new Internal(MainActivity.this);
         question = (TextView) findViewById(R.id.tV);
         catureInput = (EditText) findViewById(R.id.eT);
         apply = (Button) findViewById(R.id.apply);
@@ -43,16 +49,16 @@ public class MainActivity extends AppCompatActivity {
         mmap.put("prgoress1", "demo2");
         mmap.put("prgoress2", "demo3");
         mmap.put("prgoress3", "dem4");
+
+        Log.d("BeginAgian", offlineData.getCount()+"");
+
+        Log.d("AnnaSunn",""+offlineData.ForKey("apply").toString());
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String getAnswer = catureInput.getText().toString();
-                if(getAnswer.equals("")){
-                    Toast.makeText(MainActivity.this,"Type something",Toast.LENGTH_SHORT).show();
-                }else{
+                if(!internal.isNetworkAvailable()){
                     mmap.put("answer",getAnswer);
-
-                    ///
                     final String REGISTER_URL = "https://test.internshala.com/json/test/offline";
 
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
@@ -70,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onErrorResponse(VolleyError error) {
                                     error.printStackTrace();
                                     Log.d("OfflineDD","V V E " +offlineData.queryDB("apply"));
-                                   // Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                                    // Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
 
 
                                 }
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                             String json = null;
                             try {
                                 json = new ObjectMapper().writeValueAsString(params);
-                               offlineData.storeData("apply",json,"",REGISTER_URL,"POST","","StringRequest","");
+                                offlineData.storeData("apply",json,"",REGISTER_URL,"POST","","StringRequest","");
                                 Log.d("OfflineD",offlineData.queryDB("apply"));
 
                             } catch (IOException e) {
@@ -98,6 +104,18 @@ public class MainActivity extends AppCompatActivity {
 
                     RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
                     requestQueue.add(stringRequest);
+
+                    Log.d("BeginAgain", "FF  "+ offlineData.getCount());
+
+
+                }
+
+                if(getAnswer.equals("")){
+                    Toast.makeText(MainActivity.this,"Type something",Toast.LENGTH_SHORT).show();
+                }else{
+                   // mmap.put("answer",getAnswer);
+
+                    ///
 
                 }
             }
