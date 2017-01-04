@@ -40,14 +40,27 @@ public class Caller {
         this.answer = answer;
     }
 
+    public String getStat() {
+        return stat;
+    }
+
+    public void setStat(String stat) {
+        this.stat = stat;
+    }
+
     private String reg_url;
     private String req_method;
     private String answer;
 
-    public Caller(String url, String req_method, String answer){
+
+    private String stat;
+
+    public Caller(String url, String req_method, String answer,String stat){
         this.answer = answer;
         this.reg_url = url;
         this.req_method = req_method;
+        this.stat =stat;
+
     }
 
 }

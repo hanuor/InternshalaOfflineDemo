@@ -101,10 +101,10 @@ public class SaveOfflineData extends SQLiteOpenHelper {
             String regenKey = _key;
             String returnString = null;
             SQLiteDatabase db = this.getReadableDatabase();
-            String ans = null, url=null, method = null;
+            String ans = null, url=null, method = null, status = null;
 
             String query_params = "SELECT " + COLUMN_ID + ", " + COLUMN_DATA + ", " + COLUMN_URL + ", " +
-                    COLUMN_R_METHOD
+                    COLUMN_R_METHOD + ", " + COLUMN_STATUS
                     + " FROM " + GLOBALTABLENAME + " WHERE " + COLUMN_ID + " = " + "'" + regenKey + "'" + ";";
 
 
@@ -115,7 +115,9 @@ public class SaveOfflineData extends SQLiteOpenHelper {
 
                     url = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_URL));
                     method = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_R_METHOD));
-                    callerObj.add(new Caller(url,method,ans));
+                    status = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_STATUS));
+                    callerObj.add(new Caller(url,method,ans,status));
+
 
 
 
