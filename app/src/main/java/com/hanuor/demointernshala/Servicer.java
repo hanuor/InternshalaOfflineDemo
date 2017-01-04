@@ -77,7 +77,7 @@ public class Servicer extends Service {
 
                     if(internal.isNetworkAvailable()){
                         Log.d("Nakedand","All the lights");
-                        
+
                         internal.start();
                     }
 
