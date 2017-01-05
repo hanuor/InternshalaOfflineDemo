@@ -45,6 +45,9 @@ public class Internal{
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.d("Hogaya!!","save");
+                        //offlineData.deleteUp();
+                       // offlineData.update("apply","network_error","unprocessed");
                         //offlineData.update("apply",response,"saved");
                   //      Log.d("OfflineDD","V V " +offlineData.queryDB("apply"));
                         //Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
@@ -71,7 +74,7 @@ public class Internal{
                 String json = null;
                 try {
                     json = new ObjectMapper().writeValueAsString(params);
-                    offlineData.storeData("apply",json,"",REGISTER_URL,"POST","","StringRequest","");
+                  //  offlineData.storeData("apply",json,"",REGISTER_URL,"POST","","StringRequest","");
                     Log.d("OfflineD",offlineData.queryDB("apply"));
 
                 } catch (IOException e) {

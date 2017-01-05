@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("BeginAgian", offlineData.getCount()+"");
 
-        Log.d("AnnaSunn",""+offlineData.ForKey("apply").toString());
+//        Log.d("AnnaSunn",""+offlineData.ForKey("apply").toString());
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    offlineData.update("apply",response,"saved");
                                     Log.d("OfflineDD","V V " +offlineData.queryDB("apply"));
                                     //Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
 
@@ -75,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     error.printStackTrace();
+
+                                    offlineData.update("apply","network_error","unprocessed");
                                     Log.d("OfflineDD","V V E " +offlineData.queryDB("apply"));
                                     // Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
 

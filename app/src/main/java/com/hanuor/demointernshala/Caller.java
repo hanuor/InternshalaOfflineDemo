@@ -16,6 +16,16 @@ package com.hanuor.demointernshala;
  */
 
 public class Caller {
+    public Caller(String url, String req_method, String answer,String stat, String requestType, String extras, String id,String response){
+        this.answer = answer;
+        this.reg_url = url;
+        this.req_method = req_method;
+        this.stat =stat;
+        this.extras = extras;
+        this.response = response;
+        this.id = id;
+        this.requestType = requestType;
+    }
     public String getReg_url() {
         return reg_url;
     }
@@ -52,15 +62,44 @@ public class Caller {
     private String req_method;
     private String answer;
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getRequestType() {
+        return requestType;
+    }
+
+    public void setRequestType(String requestType) {
+        this.requestType = requestType;
+    }
+
+    public String getExtras() {
+        return extras;
+    }
+
+    public void setExtras(String extras) {
+        this.extras = extras;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
+    private String id;
+    private String requestType;
+    private String extras;
+    private String response;
     private String stat;
 
-    public Caller(String url, String req_method, String answer,String stat){
-        this.answer = answer;
-        this.reg_url = url;
-        this.req_method = req_method;
-        this.stat =stat;
 
-    }
 
 }

@@ -30,12 +30,16 @@ public class Servicer extends Service {
     Internal internal;
     SaveOfflineData offlineData;
     public static final long NOTIFY_INTERVAL = 1000; // 10 seconds
-
+    public static final long NOTIFY_INTERVAL_FOR_TASK = 9000; // 10 seconds
     // run on another Thread to avoid crash
     private Handler mHandler = new Handler();
+    private Handler mHandler2 = new Handler();
     // timer handling
     private Timer mTimer = null;
+    private Timer mTimer2 = null;
+    GetSetGo getSetGo = new GetSetGo();
     ArrayList<Caller> callerArrayList;
+    ArrayList<Caller> _caller;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -52,7 +56,10 @@ public class Servicer extends Service {
         super.onCreate();
         Log.d("Nakedand","Dumbtss");
         offlineData = new SaveOfflineData(getApplicationContext());
-        callerArrayList = offlineData.ForKey("apply");
+
+        _caller = offlineData.ForKey();
+        offlineData.clearTable();
+       // callerArrayList = offlineData.ForKey("apply");
 
         internal = new Internal(getApplicationContext());
         if (mTimer != null) {
@@ -64,6 +71,22 @@ public class Servicer extends Service {
         // schedule task
         mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 0, NOTIFY_INTERVAL);
 
+        if (mTimer2 != null) {
+            mTimer2.cancel();
+        } else {
+            // recreate new
+            mTimer2 = new Timer();
+        }
+        // schedule task
+        mTimer2.scheduleAtFixedRate(new ScheduleTimerTask(), 0, NOTIFY_INTERVAL_FOR_TASK);
+
+    }
+    public void isActive(boolean value){
+        if(value){
+            getSetGo.setActive(true);
+        }else{
+            getSetGo.setActive(false);
+        }
     }
     class TimeDisplayTimerTask extends TimerTask {
         @Override
@@ -77,8 +100,10 @@ public class Servicer extends Service {
 
                     if(internal.isNetworkAvailable()){
                         Log.d("Nakedand","All the lights");
+                        isActive(true);
 
-                        internal.start();
+                    }else{
+                        isActive(false);
                     }
 
                                  }
@@ -87,5 +112,31 @@ public class Servicer extends Service {
         }
 
     }
+    class ScheduleTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            // run on another thread
 
+            mHandler2.post(new Runnable() {
+
+                @Override
+                public void run() {
+                        if(getSetGo.isActive()){
+                            getSetGo.setFlag(true);
+                            Log.d("All this ligg",""+_caller.size());
+                            internal.start(_caller.get(0).getReg_url(),_caller.get(0).getReq_method(),_caller.get(0).getAnswer());
+                            _caller.remove(0);
+                        }else{
+                            if(getSetGo.isFlag()) {
+                                Log.d("Heys", "" + offlineData.getCount());
+
+                            }
+                        }
+
+                }
+
+            });
+        }
+
+    }
 }
