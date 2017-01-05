@@ -123,12 +123,18 @@ public class Servicer extends Service {
                 public void run() {
                         if(getSetGo.isActive()){
                             getSetGo.setFlag(true);
-                            Log.d("All this ligg",""+_caller.size());
-                            internal.start(_caller.get(0).getReg_url(),_caller.get(0).getReq_method(),_caller.get(0).getAnswer());
-                            _caller.remove(0);
-                        }else{
+                            Log.d("All this ligg",""+_caller.size() + " but size   " + offlineData.getCount());
+                            if(_caller.size()!=0) {
+                                internal.start(_caller.get(0).getReg_url(), _caller.get(0).getReq_method(), _caller.get(0).getAnswer());
+                                _caller.remove(0);
+                            }
+                            else{
+                                Log.d("All DONE","COME HEGDED");
+                            }
+                            }else{
                             if(getSetGo.isFlag()) {
                                 Log.d("Heys", "" + offlineData.getCount());
+                                offlineData.insertArrayList(_caller);
 
                             }
                         }

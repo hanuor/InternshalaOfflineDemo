@@ -181,4 +181,27 @@ String qq = "UPDATE " + GLOBALTABLENAME + " SET " + COLUMN_STATUS + "=" + "'"+ s
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+    public void insertArrayList(ArrayList<Caller> _caller){
+        if(getCount()==0){
+            SQLiteDatabase database = this.getWritableDatabase();
+            ContentValues cv = new ContentValues();
+            for(int i = 0; i < _caller.size(); i++){
+                cv.put(COLUMN_ID, _caller.get(i).getId());
+                cv.put(COLUMN_DATA, _caller.get(i).getAnswer());
+                cv.put(COLUMN_RESP, _caller.get(i).getResponse());
+                cv.put(COLUMN_URL, _caller.get(i).getReg_url());
+                cv.put(COLUMN_R_TYPE, _caller.get(i).getRequestType());
+                cv.put(COLUMN_STATUS, _caller.get(i).getStat());
+                cv.put(COLUMN_R_METHOD, _caller.get(i).getReq_method());
+                cv.put(COLUMN_EXTRAS, _caller.get(i).getExtras());
+                database.insert(GLOBALTABLENAME, null, cv);
+            }
+        }else{
+            ArrayList<Caller> getOld = ForKey();
+            _caller.addAll(getOld);
+            clearTable();
+            insertArrayList(_caller);
+           // return;
+        }
+        }
 }
