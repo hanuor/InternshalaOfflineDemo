@@ -40,12 +40,14 @@ public class Internal{
         this.context = ctx;
         offlineData = new SaveOfflineData(ctx);
     }
-    public void start(final String REGISTER_URL, String method, final String answer){
+    public void start(final String REGISTER_URL, final String method, final String answer, final int medi){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("Hogaya!!","save");
+                        Log.d("Hogaya!!","save" + medi);
+                        offlineData.delete(medi);
+
                         //offlineData.deleteUp();
                        // offlineData.update("apply","network_error","unprocessed");
                         //offlineData.update("apply",response,"saved");
@@ -58,7 +60,7 @@ public class Internal{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        Log.d("OfflineDD","V V E " +offlineData.queryDB("apply"));
+                      //  Log.d("OfflineDD","V V E " +offlineData.queryDB("apply"));
                         // Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
 
 
@@ -75,7 +77,7 @@ public class Internal{
                 try {
                     json = new ObjectMapper().writeValueAsString(params);
                   //  offlineData.storeData("apply",json,"",REGISTER_URL,"POST","","StringRequest","");
-                    Log.d("OfflineD",offlineData.queryDB("apply"));
+//                    Log.d("OfflineD",offlineData.queryDB("apply"));
 
                 } catch (IOException e) {
                     e.printStackTrace();

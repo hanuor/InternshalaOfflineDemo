@@ -10,18 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     TextView question;
@@ -29,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     Button apply;
     SaveOfflineData offlineData;
     Internal internal;
+    String getAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +49,34 @@ public class MainActivity extends AppCompatActivity {
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String getAnswer = catureInput.getText().toString();
+                getAnswer = catureInput.getText().toString();
                 if(!internal.isNetworkAvailable()){
-                    mmap.put("answer",getAnswer);
                     final String REGISTER_URL = "https://test.internshala.com/json/test/offline";
+
+                    mmap.put("username","username");
+                    mmap.put("pass","password");
+                    mmap.put("dumtss", "email");
+                    mmap.put("answer", getAnswer);
+                    String json = null;
+                    try {
+                        Log.d("Hellooo","Hye " + offlineData.getCount());
+                        json = new ObjectMapper().writeValueAsString(mmap);
+                        offlineData.storeData("apply",json,"",REGISTER_URL,"POST","","StringRequest","",offlineData.getCount()+1);
+                        mmap.clear();
+                       // offlineData.update("apply","network_error","unprocessed",offlineData.getCount()+1);
+                        Log.d("OfflineDD","V V E " +offlineData.queryDB(1));
+                        //Log.d("OfflineD",offlineData.queryDB("apply"));
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                /*
 
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    Log.d("OfflineDD","V V " +offlineData.queryDB("apply"));
+                                   // Log.d("OfflineDD","V V " +offlineData.queryDB());
                                     //Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
 
                                 }
@@ -75,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onErrorResponse(VolleyError error) {
                                     error.printStackTrace();
 
-                                    offlineData.update("apply","network_error","unprocessed");
-                                    Log.d("OfflineDD","V V E " +offlineData.queryDB("apply"));
+
                                     // Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
 
 
@@ -92,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
                             String json = null;
                             try {
                                 json = new ObjectMapper().writeValueAsString(params);
-                                offlineData.storeData("apply",json,"",REGISTER_URL,"POST","","StringRequest","");
-                                Log.d("OfflineD",offlineData.queryDB("apply"));
+                                offlineData.storeData("apply",json,"",REGISTER_URL,"POST","","StringRequest","",0);
+                                //Log.d("OfflineD",offlineData.queryDB("apply"));
 
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -107,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                     requestQueue.add(stringRequest);
 
                     Log.d("BeginAgain", "FF  "+ offlineData.getCount());
-
+*/
 
                 }
 

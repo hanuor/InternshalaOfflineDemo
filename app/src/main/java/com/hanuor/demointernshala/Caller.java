@@ -16,7 +16,7 @@ package com.hanuor.demointernshala;
  */
 
 public class Caller {
-    public Caller(String url, String req_method, String answer,String stat, String requestType, String extras, String id,String response){
+    public Caller(String url, String req_method, String answer,String stat, String requestType, String extras, String id,String response, int mediator){
         this.answer = answer;
         this.reg_url = url;
         this.req_method = req_method;
@@ -25,6 +25,7 @@ public class Caller {
         this.response = response;
         this.id = id;
         this.requestType = requestType;
+        this.mediator = mediator;
     }
     public String getReg_url() {
         return reg_url;
@@ -61,6 +62,16 @@ public class Caller {
     private String reg_url;
     private String req_method;
     private String answer;
+
+    public int getMediator() {
+        return mediator;
+    }
+
+    public void setMediator(int mediator) {
+        this.mediator = mediator;
+    }
+
+    private int mediator;
 
     public String getId() {
         return id;

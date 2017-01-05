@@ -38,6 +38,7 @@ public class SaveOfflineData extends SQLiteOpenHelper {
     private static final String COLUMN_STATUS = "status";
     private static final String COLUMN_R_METHOD = "requestmethod";
     private static final String COLUMN_EXTRAS = "extras";
+    private static final String MEDIATOR = "mediator";
     Internal internal;
 
 
@@ -53,7 +54,8 @@ public class SaveOfflineData extends SQLiteOpenHelper {
                 COLUMN_ID+ " STRING," + COLUMN_DATA + " String, " +
                 COLUMN_RESP + " STRING, " + COLUMN_URL + " String, " +
                 COLUMN_R_TYPE + " String, " + COLUMN_STATUS + " String, " +
-                COLUMN_R_METHOD + " String, " + COLUMN_EXTRAS + " String"
+                COLUMN_R_METHOD + " String, " + COLUMN_EXTRAS + " String, " +
+                MEDIATOR + " INTEGER"
                 + ")";
         sqLiteDatabase.execSQL(TABLE_IMG);
 
@@ -63,7 +65,7 @@ public class SaveOfflineData extends SQLiteOpenHelper {
         //internal = new Internal(context);
     }
 
-    public void storeData(String key, String data, String response, String url, String requestType, String status, String requestMethod, String extras){
+    public void storeData(String key, String data, String response, String url, String requestType, String status, String requestMethod, String extras, int mediator){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_ID, key);
@@ -74,15 +76,16 @@ public class SaveOfflineData extends SQLiteOpenHelper {
         cv.put(COLUMN_STATUS, status);
         cv.put(COLUMN_R_METHOD, requestMethod);
         cv.put(COLUMN_EXTRAS, extras);
+        cv.put(MEDIATOR, mediator);
         database.insert(GLOBALTABLENAME, null, cv);
     }
-    public String queryDB(String _key){
-        String regenKey = _key ;
+    public String queryDB(int _key){
+
         String returnString = null;
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query_params = "SELECT " + COLUMN_ID +", " + COLUMN_DATA
-                + " FROM " + GLOBALTABLENAME + " WHERE " + COLUMN_ID + " = " +"'" +regenKey +"'"+ ";";
+                + " FROM " + GLOBALTABLENAME + " WHERE " + MEDIATOR + " = " +"" +_key +""+ ";";
         Cursor cSor = db.rawQuery(query_params, null);
         if(cSor.moveToFirst()){
             do{
@@ -103,6 +106,7 @@ public class SaveOfflineData extends SQLiteOpenHelper {
             String returnString = null;
             SQLiteDatabase db = this.getReadableDatabase();
             String ans = null, url=null, method = null, status = null, id = null, reqType = null, extras = null, response = null;
+            int mediator;
 
        /*     String query_params = "SELECT " + COLUMN_ID + ", " + COLUMN_DATA + ", " + COLUMN_URL + ", " +
                     COLUMN_R_METHOD + ", " + COLUMN_STATUS
@@ -124,11 +128,12 @@ public class SaveOfflineData extends SQLiteOpenHelper {
                     reqType = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_R_TYPE));
                     extras = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_EXTRAS));
                     status = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_STATUS));
+                    mediator = cSor.getInt(cSor.getColumnIndex(SaveOfflineData.MEDIATOR));
                     if(status.equals("processed")){
                         continue;
 
                     }else{
-                        callerObj.add(new Caller(url,method,ans,status,reqType,extras,id,response));
+                        callerObj.add(new Caller(url,method,ans,status,reqType,extras,id,response,mediator));
                     }
                 } while (cSor.moveToNext());
 
@@ -147,13 +152,15 @@ public class SaveOfflineData extends SQLiteOpenHelper {
         return cSor.getCount();
     }
 
-    public void update(String id,String response, String status){
+    public void update(String id,String response, String status, int count){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_RESP, response);
         cv.put(COLUMN_STATUS, status);
+        cv.put(MEDIATOR, count);
 
-String qq = "UPDATE " + GLOBALTABLENAME + " SET " + COLUMN_STATUS + "=" + "'"+ status+"'" + ", " + COLUMN_RESP + "=" +"'"+ response+"'" + " WHERE "
+String qq = "UPDATE " + GLOBALTABLENAME + " SET " + COLUMN_STATUS + "=" + "'"+ status+"'" + ", " + COLUMN_RESP + "=" +"'"+ response+"', " +
+        MEDIATOR +"=" + count +" "+ " WHERE "
         + COLUMN_ID + "=" + "'"+id+"'";
         database.execSQL(qq);
 
@@ -194,6 +201,7 @@ String qq = "UPDATE " + GLOBALTABLENAME + " SET " + COLUMN_STATUS + "=" + "'"+ s
                 cv.put(COLUMN_STATUS, _caller.get(i).getStat());
                 cv.put(COLUMN_R_METHOD, _caller.get(i).getReq_method());
                 cv.put(COLUMN_EXTRAS, _caller.get(i).getExtras());
+                cv.put(MEDIATOR, _caller.get(i).getMediator());
                 database.insert(GLOBALTABLENAME, null, cv);
             }
         }else{
@@ -204,4 +212,14 @@ String qq = "UPDATE " + GLOBALTABLENAME + " SET " + COLUMN_STATUS + "=" + "'"+ s
            // return;
         }
         }
+
+    public void delete(int Id)
+    {
+        SQLiteDatabase database = this.getWritableDatabase();
+        try {
+
+            database.delete(SaveOfflineData.GLOBALTABLENAME,  SaveOfflineData.MEDIATOR + " = " +Id, null);
+        }
+        catch(Exception e) {e.printStackTrace(); }
+    }
 }
