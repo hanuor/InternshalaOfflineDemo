@@ -60,7 +60,7 @@ public class Internal{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                      //  Log.d("OfflineDD","V V E " +offlineData.queryDB("apply"));
+                      //.   Log.d("OfflineDD","V V E " +offlineData.queryDB("apply"));
                         // Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
 
 
