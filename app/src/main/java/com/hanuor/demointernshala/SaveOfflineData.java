@@ -110,7 +110,7 @@ public class SaveOfflineData extends SQLiteOpenHelper {
         Cursor cSor = db.rawQuery(query_params, null);
         return cSor.getCount();
     }
-    public ArrayList<String> getAll(){
+    public ArrayList<ModelOfflineData> getAll(){
         String ans = null, url=null, method = null, status = null, id = null, reqType = null, extras = null, response = null;
         ArrayList<ModelOfflineData> liist = new ArrayList<ModelOfflineData>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -127,9 +127,9 @@ public class SaveOfflineData extends SQLiteOpenHelper {
                 reqType = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_R_TYPE));
                 extras = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_EXTRAS));
                 status = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_STATUS));
-                liist.add(new ModelOfflineData(url,method,ans,status,reqType,))
+                liist.add(new ModelOfflineData(url,method,ans,status,reqType,extras,id,response));
 
-                cursor.moveToNext();
+                cSor.moveToNext();
             }
         }
         return liist;

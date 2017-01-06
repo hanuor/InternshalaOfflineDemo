@@ -18,6 +18,7 @@ package com.hanuor.demointernshala;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,6 +30,7 @@ import com.android.volley.toolbox.Volley;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +49,11 @@ public class Internal{
                     public void onResponse(String response) {
                         //Request Completed
                         offlineData.updateStatus(_id,"processed");
+                        ArrayList<ModelOfflineData> modelOfflineDatas ;
+                        modelOfflineDatas = offlineData.getAll();
+                        for(int i = 0;i<  modelOfflineDatas.size(); i++){
+                            Log.d("Data NOW","   "+ modelOfflineDatas.get(i).getId() + " and  status " + modelOfflineDatas.get(i).getStat());
+                        }
                     }
                 },
                 new Response.ErrorListener() {
