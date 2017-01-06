@@ -12,7 +12,6 @@ import android.widget.Toast;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -64,10 +63,6 @@ public class MainActivity extends AppCompatActivity {
                         int counter = offlineData.getCount()+1;
                         offlineData.storeData("apply"+counter, json, "",REGISTER_URL,"POST", "unprocessed", "StringRequest", "");
                         mmap.clear();
-                        ArrayList<String> getdata = offlineData.getAll();
-                        for(int i =  0; i< getdata.size(); i++){
-                            Log.d("Insertion in DB " , "  " + getdata.get(i) );
-                        }
 
 
                     } catch (IOException e) {
