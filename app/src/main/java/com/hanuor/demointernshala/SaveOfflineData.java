@@ -20,9 +20,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
-import java.util.ArrayList;
 
 public class SaveOfflineData extends SQLiteOpenHelper {
     private static final int DB_Version = 3;
@@ -79,71 +76,36 @@ public class SaveOfflineData extends SQLiteOpenHelper {
         //cv.put(MEDIATOR, mediator);
         database.insert(GLOBALTABLENAME, null, cv);
     }
-    public String queryDB(int _key){
+    public ModelOfflineData queryDB(int _key){
 
         String returnString = null;
         SQLiteDatabase db = this.getReadableDatabase();
 
+        String ans = null, url=null, method = null, status = null, id = null, reqType = null, extras = null, response = null;
         String query_params = "SELECT " + COLUMN_ID +", " + COLUMN_DATA
                 + " FROM " + GLOBALTABLENAME + " WHERE " + COLUMN_ID + " = " +"'" +_key +"'"+ ";";
         Cursor cSor = db.rawQuery(query_params, null);
         if(cSor.moveToFirst()){
             do{
-                return  cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_DATA));
+                ans = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_DATA));
+
+                url = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_URL));
+                method = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_R_METHOD));
+                response = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_RESP));
+                id = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_ID));
+                reqType = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_R_TYPE));
+                extras = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_EXTRAS));
+                status = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_STATUS));
 
             }while(cSor.moveToNext());
 
         }else{
             return null;
         }
+        return new ModelOfflineData(url,method,ans,status,reqType,extras,id,response);
 
     }
-    public ArrayList<Caller> ForKey(){
-        ArrayList<Caller> callerObj = new ArrayList<Caller>();
-        if(getCount()!=0) {
 
-
-            String returnString = null;
-            SQLiteDatabase db = this.getReadableDatabase();
-            String ans = null, url=null, method = null, status = null, id = null, reqType = null, extras = null, response = null;
-            int mediator;
-
-       /*     String query_params = "SELECT " + COLUMN_ID + ", " + COLUMN_DATA + ", " + COLUMN_URL + ", " +
-                    COLUMN_R_METHOD + ", " + COLUMN_STATUS
-                    + " FROM " + GLOBALTABLENAME + " WHERE " + COLUMN_ID + " = " + "'" + regenKey + "'" + ";";
-
-
-*/
-
-            String query_params = "Select * from " + GLOBALTABLENAME;
-            Cursor cSor = db.rawQuery(query_params, null);
-            if (cSor.moveToFirst()) {
-                do {
-                    ans = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_DATA));
-
-                    url = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_URL));
-                    method = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_R_METHOD));
-                    response = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_RESP));
-                    id = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_ID));
-                    reqType = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_R_TYPE));
-                    extras = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_EXTRAS));
-                    status = cSor.getString(cSor.getColumnIndex(SaveOfflineData.COLUMN_STATUS));
-                    mediator = cSor.getInt(cSor.getColumnIndex(SaveOfflineData.MEDIATOR));
-                    if(status.equals("processed")){
-                        continue;
-
-                    }else{
-                        callerObj.add(new Caller(url,method,ans,status,reqType,extras,id,response,mediator));
-                    }
-                } while (cSor.moveToNext());
-
-            } else {
-                //do nothing
-            }
-        }
-        return callerObj;
-
-    }
 
     public  int getCount(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -151,18 +113,20 @@ public class SaveOfflineData extends SQLiteOpenHelper {
         Cursor cSor = db.rawQuery(query_params, null);
         return cSor.getCount();
     }
+    public void deleteRowforId(String id){
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query_params = "DELETE FROM " + GLOBALTABLENAME + " WHERE " + "" + COLUMN_ID + "=" + "'" + id + "'";
+        database.execSQL(query_params);
+        database.close();
+    }
 
     public void update(String id,String response, String status, int count){
         SQLiteDatabase database = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(COLUMN_RESP, response);
-        cv.put(COLUMN_STATUS, status);
-        cv.put(MEDIATOR, count);
-
-String qq = "UPDATE " + GLOBALTABLENAME + " SET " + COLUMN_STATUS + "=" + "'"+ status+"'" + ", " + COLUMN_RESP + "=" +"'"+ response+"', " +
+        String qq = "UPDATE " + GLOBALTABLENAME + " SET " + COLUMN_STATUS + "=" + "'"+ status+"'" + ", " + COLUMN_RESP + "=" +"'"+ response+"', " +
         MEDIATOR +"=" + count +" "+ " WHERE "
         + COLUMN_ID + "=" + "'"+id+"'";
         database.execSQL(qq);
+        database.close();
 
     }
     public void clearTable(){
@@ -170,7 +134,7 @@ String qq = "UPDATE " + GLOBALTABLENAME + " SET " + COLUMN_STATUS + "=" + "'"+ s
         db.execSQL("delete from "+ GLOBALTABLENAME);
         db.close();
     }
-    public void deleteUp(){
+    /*public void deleteUp(){
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.query(GLOBALTABLENAME, null, null, null, null, null, null);
@@ -183,12 +147,12 @@ String qq = "UPDATE " + GLOBALTABLENAME + " SET " + COLUMN_STATUS + "=" + "'"+ s
         Log.d("upupup","deleted");
         Log.d("yapapap",getCount() + "");
         db.close();
-    }
+    }*/
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
-    public void insertArrayList(ArrayList<Caller> _caller){
+   /* public void insertArrayList(ArrayList<Caller> _caller){
         if(getCount()==0){
             SQLiteDatabase database = this.getWritableDatabase();
             ContentValues cv = new ContentValues();
@@ -211,7 +175,7 @@ String qq = "UPDATE " + GLOBALTABLENAME + " SET " + COLUMN_STATUS + "=" + "'"+ s
             insertArrayList(_caller);
            // return;
         }
-        }
+        }*/
 
     public void delete(int Id)
     {
