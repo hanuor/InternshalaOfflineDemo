@@ -15,30 +15,15 @@ package com.hanuor.demointernshala;
  * limitations under the License.
  */
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 public class NetworkBReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
         String status = NetworkUtil.getConnectivityStatusString(context);
-        Toast.makeText(context, status, Toast.LENGTH_SHORT).show();
-        LoggerUtil.d(CommonValuesUtil.generalLogs, "Network Status: "+ status);
 
-        // Explicitly specify that NetworkIntentService will handle the intent.
-        ComponentName comp = new ComponentName(context.getPackageName(),
-                NetworkIntentService.class.getName());
-        intent.putExtra("status", status);
 
-        // Start the service, keeping the device awake while it is launching.
-        context.startService((intent.setComponent(comp)));
-
-        if(isOrderedBroadcast()) {
-            setResultCode(Activity.RESULT_OK);
-        }
     }
 }

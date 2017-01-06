@@ -54,9 +54,9 @@ public class SaveOfflineData extends SQLiteOpenHelper {
                 COLUMN_ID+ " STRING," + COLUMN_DATA + " String, " +
                 COLUMN_RESP + " STRING, " + COLUMN_URL + " String, " +
                 COLUMN_R_TYPE + " String, " + COLUMN_STATUS + " String, " +
-                COLUMN_R_METHOD + " String, " + COLUMN_EXTRAS + " String, " +
-                MEDIATOR + " INTEGER"
-                + ")";
+                COLUMN_R_METHOD + " String, " + COLUMN_EXTRAS + " String" +
+
+                 ")";
         sqLiteDatabase.execSQL(TABLE_IMG);
 
     }
@@ -76,7 +76,7 @@ public class SaveOfflineData extends SQLiteOpenHelper {
         cv.put(COLUMN_STATUS, status);
         cv.put(COLUMN_R_METHOD, requestMethod);
         cv.put(COLUMN_EXTRAS, extras);
-        cv.put(MEDIATOR, mediator);
+        //cv.put(MEDIATOR, mediator);
         database.insert(GLOBALTABLENAME, null, cv);
     }
     public String queryDB(int _key){
@@ -85,7 +85,7 @@ public class SaveOfflineData extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query_params = "SELECT " + COLUMN_ID +", " + COLUMN_DATA
-                + " FROM " + GLOBALTABLENAME + " WHERE " + MEDIATOR + " = " +"" +_key +""+ ";";
+                + " FROM " + GLOBALTABLENAME + " WHERE " + COLUMN_ID + " = " +"'" +_key +"'"+ ";";
         Cursor cSor = db.rawQuery(query_params, null);
         if(cSor.moveToFirst()){
             do{
