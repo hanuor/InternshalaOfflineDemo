@@ -1,6 +1,5 @@
 package com.hanuor.demointernshala;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent serviceIntent = new Intent(MainActivity.this, Servicer.class);
+       // Intent serviceIntent = new Intent(MainActivity.this, Servicer.class);
         // Start service
-        startService(serviceIntent);
+       // startService(serviceIntent);
         internal = new Internal(MainActivity.this);
         question = (TextView) findViewById(R.id.tV);
         catureInput = (EditText) findViewById(R.id.eT);
@@ -61,11 +61,14 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         Log.d("Hellooo","Hye " + offlineData.getCount());
                         json = new ObjectMapper().writeValueAsString(mmap);
-                        offlineData.storeData("apply",json,"",REGISTER_URL,"POST","","StringRequest","",offlineData.getCount()+1);
+                        int counter = offlineData.getCount()+1;
+                        offlineData.storeData("apply"+counter, json, "",REGISTER_URL,"POST", "unprocessed", "StringRequest", "");
                         mmap.clear();
-                       // offlineData.update("apply","network_error","unprocessed",offlineData.getCount()+1);
-                        Log.d("OfflineDD","V V E " +offlineData.queryDB(1));
-                        //Log.d("OfflineD",offlineData.queryDB("apply"));
+                        ArrayList<String> getdata = offlineData.getAll();
+                        for(int i =  0; i< getdata.size(); i++){
+                            Log.d("Insertion in DB " , "  " + getdata.get(i) );
+                        }
+
 
                     } catch (IOException e) {
                         e.printStackTrace();

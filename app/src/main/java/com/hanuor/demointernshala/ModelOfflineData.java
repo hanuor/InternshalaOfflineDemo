@@ -25,6 +25,14 @@ public class ModelOfflineData {
         this.response = response;
         this.id = id;
         this.requestType = requestType;
+        setId(id);
+        setAnswer(answer);
+        setExtras(extras);
+        setReg_url(url);
+        setReq_method(req_method);
+        setRequestType(requestType);
+        setResponse(response);
+        setStat(stat);
     }
     public String getReg_url() {
         return reg_url;

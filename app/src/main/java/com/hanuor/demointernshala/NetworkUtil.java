@@ -42,15 +42,15 @@ public class NetworkUtil {
             return TYPE_NOT_CONNECTED;
         }
 
-        public static String getConnectivityStatusString(Context context) {
+        public static Boolean getConnectivityStatusString(Context context) {
             int conn = NetworkUtil.getConnectivityStatus(context);
-            String status = null;
+            boolean status = false;
             if (conn == NetworkUtil.TYPE_WIFI) {
-                status = "Wifi enabled";
+                status = true;
             } else if (conn == NetworkUtil.TYPE_MOBILE) {
-                status = "Mobile data enabled";
+                status = true;
             } else if (conn == NetworkUtil.TYPE_NOT_CONNECTED) {
-                status = "Not connected to Internet";
+                status = false;
             }
             return status;
         }

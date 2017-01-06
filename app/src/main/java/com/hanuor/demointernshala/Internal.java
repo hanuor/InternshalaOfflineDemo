@@ -18,7 +18,6 @@ package com.hanuor.demointernshala;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,29 +39,26 @@ public class Internal{
         this.context = ctx;
         offlineData = new SaveOfflineData(ctx);
     }
-    public void start(final String REGISTER_URL, final String method, final String answer, final int medi){
+    public void start(final String _id, final String REGISTER_URL, final String method, final String answer){
+        offlineData.updateStatus(_id,"processing");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("Hogaya!!","save" + medi);
-                        offlineData.delete(medi);
-
-                        //offlineData.deleteUp();
-                       // offlineData.update("apply","network_error","unprocessed");
-                        //offlineData.update("apply",response,"saved");
-                  //      Log.d("OfflineDD","V V " +offlineData.queryDB("apply"));
-                        //Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
-
+                        //Request Completed
+                        offlineData.updateStatus(_id,"processed");
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                      //.   Log.d("OfflineDD","V V E " +offlineData.queryDB("apply"));
-                        // Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        /*if(){
 
+                        }else{
+
+                        }*/
+                        offlineData.updateStatus(_id,"unprocessed");
 
                     }
                 }){

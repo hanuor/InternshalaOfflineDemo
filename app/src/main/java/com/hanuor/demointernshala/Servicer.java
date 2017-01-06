@@ -20,11 +20,9 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class Servicer extends Service {
     Internal internal;
@@ -51,13 +49,14 @@ public class Servicer extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
+/*
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d("Nakedand","Dumbtss");
         offlineData = new SaveOfflineData(getApplicationContext());
 
-        _caller = offlineData.ForKey();
+        //_caller = offlineData.ForKey();
         offlineData.clearTable();
        // callerArrayList = offlineData.ForKey("apply");
 
@@ -146,4 +145,5 @@ public class Servicer extends Service {
         }
 
     }
+*/
 }

@@ -18,12 +18,33 @@ package com.hanuor.demointernshala;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 public class NetworkBReceiver extends BroadcastReceiver{
+    SaveOfflineData saveOfflineData;
+    Internal internal;
     @Override
     public void onReceive(Context context, Intent intent) {
-        String status = NetworkUtil.getConnectivityStatusString(context);
+        saveOfflineData = new SaveOfflineData(context);
+        internal = new Internal(context);
+        boolean status = NetworkUtil.getConnectivityStatusString(context);
+        if(status){
+
+            int _count = saveOfflineData.getCount();
+            if(_count!=0){
+                Log.d("Counnnnt", "" + _count);
+                for(int i = 1; i<= _count ; i++){
+                    ModelOfflineData modelOfflineData = saveOfflineData.queryDB("apply"+i);
+                   if(modelOfflineData.getStat().equals("unprocessed")){
+                        internal.start(modelOfflineData.getId(), modelOfflineData.getReg_url(),modelOfflineData.getReq_method(),modelOfflineData.getAnswer());
+                    }
+Log.d("Hey"," " + modelOfflineData.getStat());
+
+                }
+
+            }
 
 
+        }
     }
 }
