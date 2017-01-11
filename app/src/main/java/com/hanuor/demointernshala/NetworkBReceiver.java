@@ -19,6 +19,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 public class NetworkBReceiver extends BroadcastReceiver{
     SaveOfflineData saveOfflineData;
@@ -28,6 +29,7 @@ public class NetworkBReceiver extends BroadcastReceiver{
         saveOfflineData = new SaveOfflineData(context);
         internal = new Internal(context);
         boolean status = NetworkUtil.getConnectivityStatusString(context);
+        Toast.makeText(context, "Hey" + status, Toast.LENGTH_SHORT).show();
         if(status){
 
             int _count = saveOfflineData.getCount();

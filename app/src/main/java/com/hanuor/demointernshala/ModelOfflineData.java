@@ -32,7 +32,7 @@ public class ModelOfflineData {
         setReq_method(req_method);
         setRequestType(requestType);
         setResponse(response);
-        setStat(stat);
+        setStat(stat)   ;
     }
     public String getReg_url() {
         return reg_url;
