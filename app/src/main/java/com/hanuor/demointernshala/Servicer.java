@@ -21,7 +21,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
 import java.util.Timer;
 
 public class Servicer extends Service {
@@ -35,9 +34,7 @@ public class Servicer extends Service {
     // timer handling
     private Timer mTimer = null;
     private Timer mTimer2 = null;
-    GetSetGo getSetGo = new GetSetGo();
-    ArrayList<Caller> callerArrayList;
-    ArrayList<Caller> _caller;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

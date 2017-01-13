@@ -15,5 +15,13 @@ package com.hanuor.demointernshala.test;
  * limitations under the License.
  */
 
+import com.google.gson.JsonObject;
+
+import retrofit.Call;
+import retrofit.http.GET;
+import retrofit.http.Path;
+
 public interface RetroInterface {
+    @GET("/json/{key}")
+    Call<JsonObject> getinternships(@Path("key") String key);
 }

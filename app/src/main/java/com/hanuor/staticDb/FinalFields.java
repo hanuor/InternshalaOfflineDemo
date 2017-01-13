@@ -16,5 +16,5 @@ package com.hanuor.staticDb;
  */
 
 public class FinalFields {
-    public static final String TESTURL = "https://test.internshala.com/json/internships";
+    public static final String TESTURL = "https://test.internshala.com/";
 }

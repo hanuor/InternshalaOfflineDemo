@@ -14,11 +14,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver android:name="com.hanuor.demointernshala.Receive">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
+
         <service android:name="com.hanuor.demointernshala.Servicer"/>
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -27,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+       <activity android:name=".SecondActivity"/>
         <receiver
             android:name=".NetworkBReceiver"
             android:label="NetworkReceiver">
