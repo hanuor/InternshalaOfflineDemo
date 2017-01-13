@@ -40,6 +40,18 @@
             android:textAllCaps="false"
             android:fontFamily="sans-serif-condensed"
             android:layout_margin="11dp"/>
+
+        <Button
+            android:text="Test it"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif-condensed"
+            android:backgroundTint="#2196F3"
+            android:textColor="#ffffff"
+            android:id="@+id/test" />
     </RelativeLayout>
 
 

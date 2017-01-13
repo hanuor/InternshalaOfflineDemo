@@ -1,5 +1,6 @@
 package com.hanuor.demointernshala;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     SaveOfflineData offlineData;
     Internal internal;
     String getAnswer;
+    Button test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
        // Intent serviceIntent = new Intent(MainActivity.this, Servicer.class);
         // Start service
        // startService(serviceIntent);
+        test = (Button) findViewById(R.id.test);
         internal = new Internal(MainActivity.this);
         question = (TextView) findViewById(R.id.tV);
         catureInput = (EditText) findViewById(R.id.eT);
@@ -43,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
         mmap.put("prgoress3", "dem4");
 
         Log.d("BeginAgian", offlineData.getCount()+"");
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent setT = new Intent(MainActivity.this, SecondActivity.class);
+                startActivity(setT);
+            }
+        });
 
 //        Log.d("AnnaSunn",""+offlineData.ForKey("apply").toString());
         apply.setOnClickListener(new View.OnClickListener() {
