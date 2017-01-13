@@ -52,6 +52,19 @@
             android:backgroundTint="#2196F3"
             android:textColor="#ffffff"
             android:id="@+id/test" />
+
+        <Button
+            android:text="Layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif-condensed"
+            android:backgroundTint="#2196F3"
+            android:textColor="#ffffff"
+            android:layout_above="@+id/test"
+            android:layout_alignLeft="@+id/test"
+            android:layout_alignStart="@+id/test" />
     </RelativeLayout>
 
 

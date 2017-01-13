@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     SaveOfflineData offlineData;
     Internal internal;
     String getAnswer;
-    Button test;
+    Button test, layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         // Start service
        // startService(serviceIntent);
         test = (Button) findViewById(R.id.test);
+        test = (Button) findViewById(R.id.layout);
         internal = new Internal(MainActivity.this);
         question = (TextView) findViewById(R.id.tV);
         catureInput = (EditText) findViewById(R.id.eT);
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent setT = new Intent(MainActivity.this, SecondActivity.class);
                 startActivity(setT);
             }
+
+
         });
 
 //        Log.d("AnnaSunn",""+offlineData.ForKey("apply").toString());
@@ -78,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                 /*
 
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
