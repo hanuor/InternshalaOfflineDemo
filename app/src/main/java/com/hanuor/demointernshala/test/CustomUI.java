@@ -38,12 +38,11 @@ public class CustomUI extends AppCompatActivity {
         fragmentList.add(new FragmentB());
         fragmentList.add(new FragmentC());
         fragmentList.add(new FragmentD());
-        fragmentList.add(new FragmentE());
-
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         spaceTabLayout = (SpaceTabLayout) findViewById(R.id.spaceTabLayout);
 
         //we need the savedInstanceState to retrieve the position
         spaceTabLayout.initialize(viewPager, getSupportFragmentManager(), fragmentList, savedInstanceState);
+        
     }
 }

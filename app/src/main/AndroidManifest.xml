@@ -18,7 +18,8 @@
         android:theme="@style/AppTheme">
 
         <service android:name="com.hanuor.demointernshala.Servicer"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".test.CustomUI">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
