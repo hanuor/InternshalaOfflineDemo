@@ -2,21 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="#eeeeee"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.arlib.floatingsearchview.FloatingSearchView
         android:id="@+id/floating_search_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:floatingSearch_searchBarMarginLeft="11dp"
+        app:floatingSearch_searchBarMarginLeft="3dp"
         app:floatingSearch_searchBarMarginTop="11dp"
-        app:floatingSearch_searchBarMarginRight="11dp"
-        app:floatingSearch_searchHint="Search..."
+        app:floatingSearch_searchBarMarginRight="3dp"
+        app:floatingSearch_searchHint="Search for an internship"
         app:floatingSearch_suggestionsListAnimDuration="250"
-        app:floatingSearch_showSearchKey="false"
+        app:floatingSearch_showSearchKey="true"
         app:floatingSearch_leftActionMode="showSearch"
-        
-
+        app:floatingSearch_menu="@menu/menu_items"
         app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
 
 </RelativeLayout>
