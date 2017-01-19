@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         // Start service
        // startService(serviceIntent);
         test = (Button) findViewById(R.id.test);
-        test = (Button) findViewById(R.id.layout);
+        layout = (Button) findViewById(R.id.layout);
         internal = new Internal(MainActivity.this);
         question = (TextView) findViewById(R.id.tV);
         catureInput = (EditText) findViewById(R.id.eT);
@@ -55,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
+        });
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
         });
 
 //        Log.d("AnnaSunn",""+offlineData.ForKey("apply").toString());

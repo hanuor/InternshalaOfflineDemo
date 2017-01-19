@@ -55,29 +55,6 @@ public class SecondActivity extends AppCompatActivity {
                 retro.setTextColor(Color.parseColor("#eeeeee"));
                 retro.setText(response.body().toString());
 
-                StringRequest strReq = new StringRequest(Request.Method.GET,
-                        "https://test.internshala.com/json/internships", new com.android.volley.Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("Roar  Volley   ", response.toString());
-                        volley.setTextColor(Color.parseColor("#212121"));
-                        volley.setText(response);
-                        //  pDialog.hide();
-
-                    }
-                }, new com.android.volley.Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Roar  Volley  "," Error");
-                        //  pDialog.hide();
-                    }
-                });
-
-
-                RequestQueue requestQueue = Volley.newRequestQueue(SecondActivity.this);
-                requestQueue.add(strReq);
             }
 
             @Override
@@ -90,6 +67,29 @@ public class SecondActivity extends AppCompatActivity {
 
         String url = "http://api.androidhive.info/volley/string_response.html";
 
+        StringRequest strReq = new StringRequest(Request.Method.GET,
+                "https://test.internshala.com/json/internships", new com.android.volley.Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d("Roar  Volley   ", response.toString());
+                volley.setTextColor(Color.parseColor("#212121"));
+                volley.setText(response);
+                //  pDialog.hide();
+
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Roar  Volley  "," Error");
+                //  pDialog.hide();
+            }
+        });
+
+
+        RequestQueue requestQueue = Volley.newRequestQueue(SecondActivity.this);
+        requestQueue.add(strReq);
 
     }
 }
