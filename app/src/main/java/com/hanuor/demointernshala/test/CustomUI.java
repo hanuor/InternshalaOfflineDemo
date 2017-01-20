@@ -43,6 +43,6 @@ public class CustomUI extends AppCompatActivity {
 
         //we need the savedInstanceState to retrieve the position
         spaceTabLayout.initialize(viewPager, getSupportFragmentManager(), fragmentList, savedInstanceState);
-        
+
     }
 }
