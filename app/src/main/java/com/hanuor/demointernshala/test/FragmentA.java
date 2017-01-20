@@ -14,19 +14,34 @@ package com.hanuor.demointernshala.test;/*
  * limitations under the License.
  */
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.hanuor.demointernshala.R;
+import com.hanuor.staticDb.AutoCompleteDatabase;
+import com.hanuor.staticDb.AutoCompleteModel;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class FragmentA extends android.support.v4.app.Fragment {
 
     Button begin;
-    String url = "";
+    String url = "https://test.internshala.com/json/student/get_autocomplete_data/college";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -35,8 +50,42 @@ public class FragmentA extends android.support.v4.app.Fragment {
         begin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"Dum tss", Toast.LENGTH_SHORT).show();
+                final ArrayList<AutoCompleteModel> _arr = new ArrayList<AutoCompleteModel>();
+                StringRequest strReq = new StringRequest(Request.Method.GET,
+                        url, new com.android.volley.Response.Listener<String>() {
 
+                    @TargetApi(Build.VERSION_CODES.KITKAT)
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.toString());
+                            JSONArray jsonArray = jsonObject.getJSONArray("colleges");
+                            for(int i = 0;i< jsonArray.length(); i++){
+
+                                _arr.add(new AutoCompleteModel(Integer.toString(i),Integer.toString(i),jsonArray.get(i).toString(),"status"));
+                            }
+
+                            AutoCompleteDatabase aam = new AutoCompleteDatabase(getContext());
+                            aam.storeData(_arr);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        //  pDialog.hide();
+
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Roar  Volley  "," Error");
+                        //  pDialog.hide();
+                    }
+                });
+
+
+                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                requestQueue.add(strReq);
 
             }
         });

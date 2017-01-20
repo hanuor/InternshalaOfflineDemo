@@ -17,8 +17,10 @@ package com.hanuor.staticDb;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -44,6 +46,7 @@ public class AutoCompleteDatabase extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(TABLE_CREATE);
     }
     public void storeData(ArrayList<AutoCompleteModel> _autoList){
+        Log.d("Calculation",":  ");
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
@@ -56,6 +59,7 @@ public class AutoCompleteDatabase extends SQLiteOpenHelper {
                 db.insert(TABLENAME, null, values);
             }
             db.setTransactionSuccessful();
+            Log.d("Calculation","::::::");
         } finally {
             db.endTransaction();
         }
@@ -63,5 +67,11 @@ public class AutoCompleteDatabase extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
+    }
+    public int queryDB(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_params = "SELECT " + "*" + " FROM " + TABLENAME;
+        Cursor cSor = db.rawQuery(query_params, null);
+        return cSor.getCount();
     }
 }
