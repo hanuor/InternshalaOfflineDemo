@@ -29,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.hanuor.demointernshala.R;
+import com.hanuor.demointernshala.repositories.CollegesRepository;
 import com.hanuor.staticDb.AutoCompleteDatabase;
 import com.hanuor.staticDb.AutoCompleteModel;
 
@@ -41,33 +42,46 @@ import java.util.ArrayList;
 public class FragmentA extends android.support.v4.app.Fragment {
 
     Button begin;
+    ArrayList<AutoCompleteModel> autoCompleteModels;
     String url = "https://test.internshala.com/json/student/get_autocomplete_data/college";
+    String newUrl = "https://test.internshala.com/json/autocomplete/syncDataOnApp";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.tabone, container, false);
         begin = (Button) v.findViewById(R.id.begin);
+        autoCompleteModels = new ArrayList<AutoCompleteModel>();
         begin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final ArrayList<AutoCompleteModel> _arr = new ArrayList<AutoCompleteModel>();
                 StringRequest strReq = new StringRequest(Request.Method.GET,
-                        url, new com.android.volley.Response.Listener<String>() {
+                        newUrl, new com.android.volley.Response.Listener<String>() {
 
                     @TargetApi(Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response.toString());
-                            JSONArray jsonArray = jsonObject.getJSONArray("colleges");
-                            for(int i = 0;i< jsonArray.length(); i++){
+                            JSONObject jsonArray = jsonObject.getJSONObject("collegesData");
+                            JSONArray jArray = jsonArray.getJSONArray("activeColleges");
 
-                                _arr.add(new AutoCompleteModel(Integer.toString(i),Integer.toString(i),jsonArray.get(i).toString(),"status"));
+                            Log.d("JsonData", "Cusiine  " + jArray.toString() + " Lenght  " + jArray.length());
+                            for(int i = 0;i< jArray.length(); i++){
+                                JSONObject jObj = jArray.getJSONObject(i);
+                                Log.d("WonderW","" + jArray.length());
+                                Log.d("Wonder","  " + jObj.get("name"));
+                                autoCompleteModels.add(new AutoCompleteModel(i,Integer.valueOf(jObj.getString("id")), jObj.getString("name"), jObj.getString("status") ));
+                              //  _arr.add(new AutoCompleteModel(Integer.toString(i),Integer.toString(i),jsonArray.get(i).toString(),"status"));
                             }
+                            
 
                             AutoCompleteDatabase aam = new AutoCompleteDatabase(getContext());
-                            aam.storeData(_arr);
+                            CollegesRepository collegesRepository = new CollegesRepository(getContext());
+                            collegesRepository.storeData(autoCompleteModels);
+
                         } catch (JSONException e) {
+                            Log.d("Houston","" + e.toString());
                             e.printStackTrace();
                         }
 

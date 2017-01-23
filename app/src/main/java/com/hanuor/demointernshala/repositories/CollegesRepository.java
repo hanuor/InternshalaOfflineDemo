@@ -36,6 +36,7 @@ public class CollegesRepository extends AutoCompleteDatabase{
 
     public void storeData(ArrayList<AutoCompleteModel> _autoList){
         SQLiteDatabase db = this.getWritableDatabase();
+        Log.d("Calculation",":::");
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();

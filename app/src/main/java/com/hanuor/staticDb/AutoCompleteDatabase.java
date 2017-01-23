@@ -15,16 +15,10 @@ package com.hanuor.staticDb;
  * limitations under the License.
  */
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import java.util.ArrayList;
-
-import static android.app.DownloadManager.COLUMN_STATUS;
 import static com.hanuor.staticDb.AutoCompleteFields.COLLEGES_ID;
 import static com.hanuor.staticDb.AutoCompleteFields.COLLEGES_IDSERVER;
 import static com.hanuor.staticDb.AutoCompleteFields.COLLEGES_NAME;
@@ -44,6 +38,7 @@ import static com.hanuor.staticDb.AutoCompleteFields.SKILLS_NAME;
 import static com.hanuor.staticDb.AutoCompleteFields.SKILLS_STATUS;
 import static com.hanuor.staticDb.AutoCompleteFields.STREAMS_ID;
 import static com.hanuor.staticDb.AutoCompleteFields.STREAMS_IDSERVERDB;
+import static com.hanuor.staticDb.AutoCompleteFields.STREAMS_NAME;
 import static com.hanuor.staticDb.AutoCompleteFields.STREAMS_STATUS;
 import static com.hanuor.staticDb.AutoCompleteFields.TABLE_COLLEGES;
 import static com.hanuor.staticDb.AutoCompleteFields.TABLE_DEGREES;
@@ -70,7 +65,7 @@ public class AutoCompleteDatabase extends SQLiteOpenHelper {
 
         String TABLE_CREATE_STREAMS = "CREATE TABLE " + TABLE_STREAMS + " (" +
                 STREAMS_ID + " INTEGER, " + STREAMS_IDSERVERDB + " INTEGER, " +
-                STREAMS_STATUS + " STRING, " + STREAMS_STATUS + " STRING);";
+                STREAMS_STATUS + " STRING, " + STREAMS_NAME + " STRING);";
 
         String TABLE_CREATE_DEGREES = "CREATE TABLE " + TABLE_DEGREES + " (" +
                 DEGREES_ID + " INTEGER, " + DEGREES_IDSERVERDB + " INTEGER, " +

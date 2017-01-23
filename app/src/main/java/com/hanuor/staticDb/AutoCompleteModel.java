@@ -18,19 +18,19 @@ package com.hanuor.staticDb;
 public class AutoCompleteModel {
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getId_server() {
+    public int getId_server() {
         return id_server;
     }
 
-    public void setId_server(String id_server) {
+    public void setId_server(int id_server) {
         this.id_server = id_server;
     }
 
@@ -50,11 +50,11 @@ public class AutoCompleteModel {
         this.status = status;
     }
 
-    public  String id;
-    public  String id_server;
+    public  int id;
+    public  int id_server;
     public  String name;
     public  String status;
-    public AutoCompleteModel(String _id, String _idServer, String _name, String _status){
+    public AutoCompleteModel(int _id, int _idServer, String _name, String _status){
         this.id = _id;
         this.id_server = _idServer;
         this.name = _name;
