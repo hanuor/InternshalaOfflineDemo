@@ -24,26 +24,73 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import static android.app.DownloadManager.COLUMN_STATUS;
+
 public class AutoCompleteDatabase extends SQLiteOpenHelper {
-    private static final int DB_Version = 3;
+    private static final int DB_Version = 5;
 
     private static final String DBNAME = "AutocompleteInternshala.db";
-    private static final String TABLENAME = "AutoComplete";
-    private static final String COLUMN_ID  = "Id";
-    private static final String COLUMN_IDSERVER = "IdServer";
-    private static final String COLUMN_STATUS= "Status";
-    private static final String COLUMN_NAME = "Name";
-    private static final String COLUMN_CREATEDAT = "CreatedAt";
-    private static final String COLUMN_UPDATEDAT = "UpdatedAt";
+
+    private static final String TABLE_COLLEGES = "colleges";
+    private static final String COLLEGES_ID  = "id";
+    private static final String COLLEGES_IDSERVER = "id_server";
+    private static final String COLLEGES_STATUS= "status";
+    private static final String COLLEGES_NAME = "name";
+
+    public static final String TABLE_SKILLS = "skills";
+    public static final String SKILLS_ID = "id";
+    public static final String SKILLS_IDSERVER = "id_server";
+    public static final String SKILLS_STATUS = "status";
+    public static final String SKILLS_NAME = "name";
+
+    private static final String TABLE_DEGREES = "degrees";
+    private static final String DEGREES_ID  = "id";
+    private static final String DEGREES_IDSERVERDB = "id_server_db";
+    private static final String DEGREES_STATUS= "status";
+    private static final String DEGREES_NAME = "name";
+
+    private static final String TABLE_STREAMS = "streams";
+    private static final String STREAMS_ID  = "id";
+    private static final String STREAMS_IDSERVERDB = "id_server_db";
+    private static final String STREAMS_STATUS= "status";
+    private static final String STREAMS_NAME = "name";
+
+    private static final String TABLE_PROFILES = "profiles";
+    private static final String PROFILES_ID  = "id";
+    private static final String PROFILES_IDSERVERDB = "id_server_db";
+    private static final String PROFILES_STATUS= "status";
+    private static final String PROFILES_NAME = "name";
+
     public AutoCompleteDatabase(Context context) {
         super(context, DBNAME, null, DB_Version);
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String TABLE_CREATE = "CREATE TABLE " + TABLENAME + " (" +
-                COLUMN_ID + " STRING, " + COLUMN_IDSERVER + " STRING, " +
-                COLUMN_STATUS + " STRING, " + COLUMN_NAME + " STRING);";
-        sqLiteDatabase.execSQL(TABLE_CREATE);
+        String TABLE_CREATE_COLLEGES = "CREATE TABLE " + TABLE_COLLEGES + " (" +
+                COLLEGES_ID + " INTEGER, " + COLLEGES_IDSERVER + " INTEGER, " +
+                COLLEGES_STATUS + " STRING, " + COLLEGES_NAME + " STRING);";
+
+        String TABLE_CREATE_SKILLS = "CREATE TABLE " + TABLE_SKILLS + " (" +
+                SKILLS_ID + " INTEGER, " + SKILLS_IDSERVER + " INTEGER, " +
+                SKILLS_STATUS + " STRING, " + SKILLS_NAME + " STRING);";
+
+        String TABLE_CREATE_STREAMS = "CREATE TABLE " + TABLE_STREAMS + " (" +
+                STREAMS_ID + " INTEGER, " + STREAMS_IDSERVERDB + " INTEGER, " +
+                STREAMS_STATUS + " STRING, " + STREAMS_STATUS + " STRING);";
+
+        String TABLE_CREATE_DEGREES = "CREATE TABLE " + TABLE_DEGREES + " (" +
+                DEGREES_ID + " INTEGER, " + DEGREES_IDSERVERDB + " INTEGER, " +
+                DEGREES_STATUS + " STRING, " + DEGREES_NAME + " STRING);";
+
+        String TABLE_CREATE_PROFILES = "CREATE TABLE " + TABLE_PROFILES + " (" +
+                PROFILES_ID + " INTEGER, " + PROFILES_IDSERVERDB + " INTEGER, " +
+                PROFILES_STATUS + " STRING, " + PROFILES_NAME + " STRING);";
+        
+        sqLiteDatabase.execSQL(TABLE_CREATE_COLLEGES);
+        sqLiteDatabase.execSQL(TABLE_CREATE_SKILLS);
+        sqLiteDatabase.execSQL(TABLE_CREATE_STREAMS);
+        sqLiteDatabase.execSQL(TABLE_CREATE_DEGREES);
+        sqLiteDatabase.execSQL(TABLE_CREATE_PROFILES);
     }
     public void storeData(ArrayList<AutoCompleteModel> _autoList){
         Log.d("Calculation",":  ");
