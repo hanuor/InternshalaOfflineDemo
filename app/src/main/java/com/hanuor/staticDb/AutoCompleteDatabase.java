@@ -29,13 +29,13 @@ import static android.app.DownloadManager.COLUMN_STATUS;
 public class AutoCompleteDatabase extends SQLiteOpenHelper {
     private static final int DB_Version = 5;
 
-    private static final String DBNAME = "AutocompleteInternshala.db";
+    public static final String DBNAME = "AutocompleteInternshala.db";
 
-    private static final String TABLE_COLLEGES = "colleges";
-    private static final String COLLEGES_ID  = "id";
-    private static final String COLLEGES_IDSERVER = "id_server";
-    private static final String COLLEGES_STATUS= "status";
-    private static final String COLLEGES_NAME = "name";
+    public static final String TABLE_COLLEGES = "colleges";
+    public static final String COLLEGES_ID  = "id";
+    public static final String COLLEGES_IDSERVER = "id_server";
+    public static final String COLLEGES_STATUS= "status";
+    public static final String COLLEGES_NAME = "name";
 
     public static final String TABLE_SKILLS = "skills";
     public static final String SKILLS_ID = "id";
@@ -43,23 +43,23 @@ public class AutoCompleteDatabase extends SQLiteOpenHelper {
     public static final String SKILLS_STATUS = "status";
     public static final String SKILLS_NAME = "name";
 
-    private static final String TABLE_DEGREES = "degrees";
-    private static final String DEGREES_ID  = "id";
-    private static final String DEGREES_IDSERVERDB = "id_server_db";
-    private static final String DEGREES_STATUS= "status";
-    private static final String DEGREES_NAME = "name";
+    public static final String TABLE_DEGREES = "degrees";
+    public static final String DEGREES_ID  = "id";
+    public static final String DEGREES_IDSERVERDB = "id_server_db";
+    public static final String DEGREES_STATUS= "status";
+    public static final String DEGREES_NAME = "name";
 
-    private static final String TABLE_STREAMS = "streams";
-    private static final String STREAMS_ID  = "id";
-    private static final String STREAMS_IDSERVERDB = "id_server_db";
-    private static final String STREAMS_STATUS= "status";
-    private static final String STREAMS_NAME = "name";
+    public static final String TABLE_STREAMS = "streams";
+    public static final String STREAMS_ID  = "id";
+    public static final String STREAMS_IDSERVERDB = "id_server_db";
+    public static final String STREAMS_STATUS= "status";
+    public static final String STREAMS_NAME = "name";
 
-    private static final String TABLE_PROFILES = "profiles";
-    private static final String PROFILES_ID  = "id";
-    private static final String PROFILES_IDSERVERDB = "id_server_db";
-    private static final String PROFILES_STATUS= "status";
-    private static final String PROFILES_NAME = "name";
+    public static final String TABLE_PROFILES = "profiles";
+    public static final String PROFILES_ID  = "id";
+    public static final String PROFILES_IDSERVERDB = "id_server_db";
+    public static final String PROFILES_STATUS= "status";
+    public static final String PROFILES_NAME = "name";
 
     public AutoCompleteDatabase(Context context) {
         super(context, DBNAME, null, DB_Version);
@@ -85,7 +85,7 @@ public class AutoCompleteDatabase extends SQLiteOpenHelper {
         String TABLE_CREATE_PROFILES = "CREATE TABLE " + TABLE_PROFILES + " (" +
                 PROFILES_ID + " INTEGER, " + PROFILES_IDSERVERDB + " INTEGER, " +
                 PROFILES_STATUS + " STRING, " + PROFILES_NAME + " STRING);";
-        
+
         sqLiteDatabase.execSQL(TABLE_CREATE_COLLEGES);
         sqLiteDatabase.execSQL(TABLE_CREATE_SKILLS);
         sqLiteDatabase.execSQL(TABLE_CREATE_STREAMS);
