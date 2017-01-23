@@ -16,4 +16,36 @@ package com.hanuor.staticDb;
  */
 
 public class AutoCompleteFields {
+    public static final String DBNAME = "AutocompleteInternshala.db";
+
+    public static final String TABLE_COLLEGES = "colleges";
+    public static final String COLLEGES_ID  = "id";
+    public static final String COLLEGES_IDSERVER = "id_server";
+    public static final String COLLEGES_STATUS= "status";
+    public static final String COLLEGES_NAME = "name";
+
+    public static final String TABLE_SKILLS = "skills";
+    public static final String SKILLS_ID = "id";
+    public static final String SKILLS_IDSERVER = "id_server";
+    public static final String SKILLS_STATUS = "status";
+    public static final String SKILLS_NAME = "name";
+
+    public static final String TABLE_DEGREES = "degrees";
+    public static final String DEGREES_ID  = "id";
+    public static final String DEGREES_IDSERVERDB = "id_server_db";
+    public static final String DEGREES_STATUS= "status";
+    public static final String DEGREES_NAME = "name";
+
+    public static final String TABLE_STREAMS = "streams";
+    public static final String STREAMS_ID  = "id";
+    public static final String STREAMS_IDSERVERDB = "id_server_db";
+    public static final String STREAMS_STATUS= "status";
+    public static final String STREAMS_NAME = "name";
+
+    public static final String TABLE_PROFILES = "profiles";
+    public static final String PROFILES_ID  = "id";
+    public static final String PROFILES_IDSERVERDB = "id_server_db";
+    public static final String PROFILES_STATUS= "status";
+    public static final String PROFILES_NAME = "name";
+
 }

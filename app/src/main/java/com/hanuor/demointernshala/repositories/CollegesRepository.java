@@ -17,13 +17,15 @@ package com.hanuor.demointernshala.repositories;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.hanuor.staticDb.AutoCompleteDatabase;
+import com.hanuor.staticDb.AutoCompleteFields;
 import com.hanuor.staticDb.AutoCompleteModel;
 
-import static android.app.DownloadManager.COLUMN_STATUS;
+import java.util.ArrayList;
 
 public class CollegesRepository extends AutoCompleteDatabase{
 
@@ -32,22 +34,28 @@ public class CollegesRepository extends AutoCompleteDatabase{
         super(context);
     }
 
-    public void storeData(){
+    public void storeData(ArrayList<AutoCompleteModel> _autoList){
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
             for (AutoCompleteModel city : _autoList) {
-                values.put(, city.getId());
-                values.put(COLUMN_IDSERVER, city.getId_server());
-                values.put(COLUMN_NAME, city.getName());
-                values.put(COLUMN_STATUS, city.getStatus());
-                db.insert(TABLENAME, null, values);
+                values.put(AutoCompleteFields.COLLEGES_ID, city.getId());
+                values.put(AutoCompleteFields.COLLEGES_IDSERVER, city.getId_server());
+                values.put(AutoCompleteFields.COLLEGES_NAME, city.getName());
+                values.put(AutoCompleteFields.COLLEGES_STATUS, city.getStatus());
+                db.insert(AutoCompleteFields.TABLE_COLLEGES, null, values);
             }
             db.setTransactionSuccessful();
             Log.d("Calculation","::::::");
         } finally {
             db.endTransaction();
         }
+    }
+    public int queryDB(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_params = "SELECT " + "*" + " FROM " + AutoCompleteFields.TABLE_COLLEGES;
+        Cursor cSor = db.rawQuery(query_params, null);
+        return cSor.getCount();
     }
 }

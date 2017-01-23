@@ -25,41 +25,35 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import static android.app.DownloadManager.COLUMN_STATUS;
+import static com.hanuor.staticDb.AutoCompleteFields.COLLEGES_ID;
+import static com.hanuor.staticDb.AutoCompleteFields.COLLEGES_IDSERVER;
+import static com.hanuor.staticDb.AutoCompleteFields.COLLEGES_NAME;
+import static com.hanuor.staticDb.AutoCompleteFields.COLLEGES_STATUS;
+import static com.hanuor.staticDb.AutoCompleteFields.DBNAME;
+import static com.hanuor.staticDb.AutoCompleteFields.DEGREES_ID;
+import static com.hanuor.staticDb.AutoCompleteFields.DEGREES_IDSERVERDB;
+import static com.hanuor.staticDb.AutoCompleteFields.DEGREES_NAME;
+import static com.hanuor.staticDb.AutoCompleteFields.DEGREES_STATUS;
+import static com.hanuor.staticDb.AutoCompleteFields.PROFILES_ID;
+import static com.hanuor.staticDb.AutoCompleteFields.PROFILES_IDSERVERDB;
+import static com.hanuor.staticDb.AutoCompleteFields.PROFILES_NAME;
+import static com.hanuor.staticDb.AutoCompleteFields.PROFILES_STATUS;
+import static com.hanuor.staticDb.AutoCompleteFields.SKILLS_ID;
+import static com.hanuor.staticDb.AutoCompleteFields.SKILLS_IDSERVER;
+import static com.hanuor.staticDb.AutoCompleteFields.SKILLS_NAME;
+import static com.hanuor.staticDb.AutoCompleteFields.SKILLS_STATUS;
+import static com.hanuor.staticDb.AutoCompleteFields.STREAMS_ID;
+import static com.hanuor.staticDb.AutoCompleteFields.STREAMS_IDSERVERDB;
+import static com.hanuor.staticDb.AutoCompleteFields.STREAMS_STATUS;
+import static com.hanuor.staticDb.AutoCompleteFields.TABLE_COLLEGES;
+import static com.hanuor.staticDb.AutoCompleteFields.TABLE_DEGREES;
+import static com.hanuor.staticDb.AutoCompleteFields.TABLE_PROFILES;
+import static com.hanuor.staticDb.AutoCompleteFields.TABLE_SKILLS;
+import static com.hanuor.staticDb.AutoCompleteFields.TABLE_STREAMS;
 
 public class AutoCompleteDatabase extends SQLiteOpenHelper {
     private static final int DB_Version = 5;
 
-    public static final String DBNAME = "AutocompleteInternshala.db";
-
-    public static final String TABLE_COLLEGES = "colleges";
-    public static final String COLLEGES_ID  = "id";
-    public static final String COLLEGES_IDSERVER = "id_server";
-    public static final String COLLEGES_STATUS= "status";
-    public static final String COLLEGES_NAME = "name";
-
-    public static final String TABLE_SKILLS = "skills";
-    public static final String SKILLS_ID = "id";
-    public static final String SKILLS_IDSERVER = "id_server";
-    public static final String SKILLS_STATUS = "status";
-    public static final String SKILLS_NAME = "name";
-
-    public static final String TABLE_DEGREES = "degrees";
-    public static final String DEGREES_ID  = "id";
-    public static final String DEGREES_IDSERVERDB = "id_server_db";
-    public static final String DEGREES_STATUS= "status";
-    public static final String DEGREES_NAME = "name";
-
-    public static final String TABLE_STREAMS = "streams";
-    public static final String STREAMS_ID  = "id";
-    public static final String STREAMS_IDSERVERDB = "id_server_db";
-    public static final String STREAMS_STATUS= "status";
-    public static final String STREAMS_NAME = "name";
-
-    public static final String TABLE_PROFILES = "profiles";
-    public static final String PROFILES_ID  = "id";
-    public static final String PROFILES_IDSERVERDB = "id_server_db";
-    public static final String PROFILES_STATUS= "status";
-    public static final String PROFILES_NAME = "name";
 
     public AutoCompleteDatabase(Context context) {
         super(context, DBNAME, null, DB_Version);
@@ -92,33 +86,10 @@ public class AutoCompleteDatabase extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(TABLE_CREATE_DEGREES);
         sqLiteDatabase.execSQL(TABLE_CREATE_PROFILES);
     }
-    public void storeData(ArrayList<AutoCompleteModel> _autoList){
-        Log.d("Calculation",":  ");
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.beginTransaction();
-        try {
-            ContentValues values = new ContentValues();
-            for (AutoCompleteModel city : _autoList) {
-                values.put(COLUMN_ID, city.getId());
-                values.put(COLUMN_IDSERVER, city.getId_server());
-                values.put(COLUMN_NAME, city.getName());
-                values.put(COLUMN_STATUS, city.getStatus());
-                db.insert(TABLENAME, null, values);
-            }
-            db.setTransactionSuccessful();
-            Log.d("Calculation","::::::");
-        } finally {
-            db.endTransaction();
-        }
-    }
+
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
-    public int queryDB(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query_params = "SELECT " + "*" + " FROM " + TABLENAME;
-        Cursor cSor = db.rawQuery(query_params, null);
-        return cSor.getCount();
-    }
+
 }
