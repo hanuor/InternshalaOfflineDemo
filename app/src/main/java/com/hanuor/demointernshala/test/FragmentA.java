@@ -64,24 +64,16 @@ public class FragmentA extends android.support.v4.app.Fragment {
         if (restoredText != null) {
 
             String time = prefs.getString("last_sync_on", "null");//"null" is the default value.
-            Log.d("Timeisprecious","" + time);
             Calendar c= Calendar.getInstance();
             c.setTime(fromDate);
             c.add(Calendar.DATE,7);
             if(c.getTime().compareTo(toDate)<0){
                 getContext().startService(new Intent(getContext(), SyncData.class));
-              /*  SharedPreferences.Editor editorial = prefs.edit();
-                editorial.putString("timestamp", format);
-                editorial.commit();*/
             }
 
         }else{
             getContext().startService(new Intent(getContext(), SyncData.class));
-/*
-            SharedPreferences.Editor editor = getContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
 
-            editor.putString("timestamp", format);
-            editor.apply();*/
 
         }
 

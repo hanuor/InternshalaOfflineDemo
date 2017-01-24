@@ -28,10 +28,11 @@ import com.hanuor.staticDb.AutoCompleteModel;
 import java.util.ArrayList;
 
 public class CollegesRepository extends AutoCompleteDatabase{
-
+    private Context ctx;
 
     public CollegesRepository(Context context) {
         super(context);
+        this.ctx = context;
     }
 
     public void storeData(ArrayList<AutoCompleteModel> _autoList){
@@ -59,4 +60,6 @@ public class CollegesRepository extends AutoCompleteDatabase{
         Cursor cSor = db.rawQuery(query_params, null);
         return cSor.getCount();
     }
+
+
 }

@@ -57,23 +57,24 @@ public class AutoCompleteDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String TABLE_CREATE_COLLEGES = "CREATE TABLE " + TABLE_COLLEGES + " (" +
                 COLLEGES_ID + " INTEGER, " + COLLEGES_IDSERVER + " INTEGER, " +
-                COLLEGES_STATUS + " STRING, " + COLLEGES_NAME + " STRING);";
+                COLLEGES_NAME + " TEXT, " + COLLEGES_STATUS + " TEXT, UNIQUE (" + COLLEGES_IDSERVER + ") ON CONFLICT REPLACE);";
 
         String TABLE_CREATE_SKILLS = "CREATE TABLE " + TABLE_SKILLS + " (" +
                 SKILLS_ID + " INTEGER, " + SKILLS_IDSERVER + " INTEGER, " +
-                SKILLS_STATUS + " STRING, " + SKILLS_NAME + " STRING);";
+                SKILLS_NAME + " TEXT, " + SKILLS_STATUS + " TEXT, UNIQUE (" + SKILLS_IDSERVER + ") ON CONFLICT REPLACE);";
 
         String TABLE_CREATE_STREAMS = "CREATE TABLE " + TABLE_STREAMS + " (" +
                 STREAMS_ID + " INTEGER, " + STREAMS_IDSERVERDB + " INTEGER, " +
-                STREAMS_STATUS + " STRING, " + STREAMS_NAME + " STRING);";
+                STREAMS_NAME + " TEXT, " + STREAMS_STATUS + " TEXT, UNIQUE (" + STREAMS_IDSERVERDB + ") ON CONFLICT REPLACE);";
 
         String TABLE_CREATE_DEGREES = "CREATE TABLE " + TABLE_DEGREES + " (" +
                 DEGREES_ID + " INTEGER, " + DEGREES_IDSERVERDB + " INTEGER, " +
-                DEGREES_STATUS + " STRING, " + DEGREES_NAME + " STRING);";
+                DEGREES_NAME + " TEXT, " + DEGREES_STATUS + " TEXT, UNIQUE (" + DEGREES_IDSERVERDB + ") ON CONFLICT REPLACE);";
+
 
         String TABLE_CREATE_PROFILES = "CREATE TABLE " + TABLE_PROFILES + " (" +
                 PROFILES_ID + " INTEGER, " + PROFILES_IDSERVERDB + " INTEGER, " +
-                PROFILES_STATUS + " STRING, " + PROFILES_NAME + " STRING);";
+                PROFILES_NAME + " TEXT, " + PROFILES_STATUS + " TEXT, UNIQUE (" + PROFILES_IDSERVERDB + ") ON CONFLICT REPLACE);";
 
         sqLiteDatabase.execSQL(TABLE_CREATE_COLLEGES);
         sqLiteDatabase.execSQL(TABLE_CREATE_SKILLS);

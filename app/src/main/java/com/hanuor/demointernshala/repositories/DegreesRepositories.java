@@ -15,8 +15,50 @@ package com.hanuor.demointernshala.repositories;
  * limitations under the License.
  */
 
-public class DegreesRepositories {
-public static void storeData(){
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
-}
+import com.hanuor.staticDb.AutoCompleteDatabase;
+import com.hanuor.staticDb.AutoCompleteFields;
+import com.hanuor.staticDb.AutoCompleteModel;
+
+import java.util.ArrayList;
+
+public class DegreesRepositories extends AutoCompleteDatabase{
+    private Context ctx;
+
+    public DegreesRepositories(Context context) {
+        super(context);
+        this.ctx = context;
+    }
+
+    public void storeData(ArrayList<AutoCompleteModel> _autoList){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Log.d("Calculation",":::");
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            for (AutoCompleteModel city : _autoList) {
+                values.put(AutoCompleteFields.DEGREES_ID, city.getId());
+                values.put(AutoCompleteFields.DEGREES_IDSERVERDB, city.getId_server());
+                values.put(AutoCompleteFields.DEGREES_NAME, city.getName());
+                values.put(AutoCompleteFields.DEGREES_STATUS, city.getStatus());
+                db.insert(AutoCompleteFields.TABLE_DEGREES, null, values);
+            }
+            db.setTransactionSuccessful();
+            Log.d("Calculation","::::::");
+        } finally {
+            db.endTransaction();
+        }
+    }
+    public int queryDB(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_params = "SELECT " + "*" + " FROM " + AutoCompleteFields.TABLE_DEGREES;
+        Cursor cSor = db.rawQuery(query_params, null);
+        return cSor.getCount();
+    }
+
 }
