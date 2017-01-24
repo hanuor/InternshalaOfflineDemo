@@ -15,6 +15,7 @@ package com.hanuor.demointernshala.test;/*
  */
 
 import android.annotation.TargetApi;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,10 +38,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FragmentA extends android.support.v4.app.Fragment {
-
+    public static final String MY_PREFS_NAME = "AutocompleteSyncTimestamp";
     Button begin;
     ArrayList<AutoCompleteModel> autoCompleteModels;
     String url = "https://test.internshala.com/json/student/get_autocomplete_data/college";
@@ -61,6 +68,43 @@ public class FragmentA extends android.support.v4.app.Fragment {
                     @TargetApi(Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onResponse(String response) {
+
+                        Date fromDate = null;
+                        Date toDate = null;
+                        SharedPreferences prefs = getContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        String format = simpleDateFormat.format(new Date());
+
+                        String restoredText = prefs.getString("timestamp", null);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        try {
+                            fromDate = sdf.parse(restoredText);
+                            toDate = sdf.parse(format);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                      if (restoredText != null) {
+
+                          String time = prefs.getString("timestamp", "null");//"null" is the default value.
+                          Log.d("Timeisprecious","" + time);
+                          Calendar c= Calendar.getInstance();
+                          c.setTime(fromDate);
+                          c.add(Calendar.DATE,7);
+                          if(c.getTime().compareTo(toDate)<0){
+
+                              SharedPreferences.Editor editorial = prefs.edit();
+                              editorial.putString("timestamp", format);
+                              editorial.commit();
+                          }
+
+                        }else{
+                            SharedPreferences.Editor editor = getContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+
+                            editor.putString("timestamp", format);
+                            editor.apply();
+                            Log.d("Timeispreciousyo","" + format);
+                        }
+
                         try {
                             JSONObject jsonObject = new JSONObject(response.toString());
                             JSONObject jsonArray = jsonObject.getJSONObject("collegesData");
