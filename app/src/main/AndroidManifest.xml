@@ -35,7 +35,7 @@
             </intent-filter>
         </receiver>
         <service android:name=".test.SyncData"/>
-
+        <service android:name=".test.AutoCompleteDataSyncIntentService" />
     </application>
 
 </manifest>

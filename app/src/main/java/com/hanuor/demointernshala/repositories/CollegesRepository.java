@@ -25,7 +25,11 @@ import com.hanuor.staticDb.AutoCompleteDatabase;
 import com.hanuor.staticDb.AutoCompleteFields;
 import com.hanuor.staticDb.AutoCompleteModel;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CollegesRepository extends AutoCompleteDatabase{
     private Context ctx;
@@ -50,6 +54,13 @@ public class CollegesRepository extends AutoCompleteDatabase{
             }
             db.setTransactionSuccessful();
             Log.d("Calculation","::::::");
+            ArrayList<String> _get = getColleges();
+            JSONArray jsonArray = new JSONArray(_get);
+            HashMap<String, String> hMap = new HashMap<String, String>();
+            hMap.put("collegesData",jsonArray.toString());
+            JSONObject jsonObject = new JSONObject(hMap);
+
+            Log.d("VamosHan","" + jsonObject.toString());
         } finally {
             db.endTransaction();
         }
@@ -59,6 +70,23 @@ public class CollegesRepository extends AutoCompleteDatabase{
         String query_params = "SELECT " + "*" + " FROM " + AutoCompleteFields.TABLE_COLLEGES;
         Cursor cSor = db.rawQuery(query_params, null);
         return cSor.getCount();
+    }
+
+    public ArrayList<String> getCollegeNamesForAutoComplete(){
+        ArrayList<String> _storeData = new ArrayList<String>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_params = "SELECT " + "* FROM " + AutoCompleteFields.TABLE_COLLEGES +";";
+        Cursor cSor = db.rawQuery(query_params, null);
+        if(cSor.moveToFirst()){
+            do{
+              _storeData.add(cSor.getString(cSor.getColumnIndex(AutoCompleteFields.COLLEGES_NAME)));
+
+            }while(cSor.moveToNext());
+
+        }else{
+            return null;
+        }
+        return _storeData;
     }
 
 
