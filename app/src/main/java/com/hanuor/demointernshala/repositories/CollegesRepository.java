@@ -25,9 +25,6 @@ import com.hanuor.staticDb.AutoCompleteDatabase;
 import com.hanuor.staticDb.AutoCompleteFields;
 import com.hanuor.staticDb.AutoCompleteModel;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -54,13 +51,13 @@ public class CollegesRepository extends AutoCompleteDatabase{
             }
             db.setTransactionSuccessful();
             Log.d("Calculation","::::::");
-            ArrayList<String> _get = getColleges();
-            JSONArray jsonArray = new JSONArray(_get);
-            HashMap<String, String> hMap = new HashMap<String, String>();
-            hMap.put("collegesData",jsonArray.toString());
-            JSONObject jsonObject = new JSONObject(hMap);
+            //ArrayList<String> _get = getColleges();
+//            JSONArray jsonArray = new JSONArray(_get);
+//            HashMap<String, String> hMap = new HashMap<String, String>();
+//            hMap.put("collegesData",jsonArray.toString());
+//            JSONObject jsonObject = new JSONObject(hMap);
 
-            Log.d("VamosHan","" + jsonObject.toString());
+         //   Log.d("VamosHan","" + jsonObject.toString());
         } finally {
             db.endTransaction();
         }
@@ -90,4 +87,80 @@ public class CollegesRepository extends AutoCompleteDatabase{
     }
 
 
+    public ArrayList<String> getSkillNamesForAutoComplete(){
+        ArrayList<String> skillNameArray = new ArrayList<String>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_params = "SELECT " + AutoCompleteFields.SKILLS_NAME + " FROM " + AutoCompleteFields.TABLE_SKILLS +";";
+        Cursor cursor = db.rawQuery(query_params, null);
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return skillNameArray;
+        }
+
+        cursor.moveToFirst();
+
+        do{
+            skillNameArray.add(cursor.getString(cursor.getColumnIndexOrThrow(AutoCompleteFields.SKILLS_NAME)));
+        }while(cursor.moveToNext());
+
+        return skillNameArray;
+    }
+
+    public ArrayList<String> getStreamNamesForAutoComplete(){
+        ArrayList<String> streamNameArray = new ArrayList<String>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_params = "SELECT " + AutoCompleteFields.STREAMS_NAME + " FROM " + AutoCompleteFields.TABLE_STREAMS +";";
+        Cursor cursor = db.rawQuery(query_params, null);
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return streamNameArray;
+        }
+
+        cursor.moveToFirst();
+
+        do{
+            streamNameArray.add(cursor.getString(cursor.getColumnIndexOrThrow(AutoCompleteFields.STREAMS_NAME)));
+        }while(cursor.moveToNext());
+
+        return streamNameArray;
+    }
+    public ArrayList<String> getProfileNamesForAutoComplete(){
+        ArrayList<String> profileNameArray = new ArrayList<String>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_params = "SELECT " + AutoCompleteFields.PROFILES_NAME + " FROM " + AutoCompleteFields.TABLE_PROFILES +";";
+        Cursor cursor = db.rawQuery(query_params, null);
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return profileNameArray;
+        }
+
+        cursor.moveToFirst();
+
+        do{
+            profileNameArray.add(cursor.getString(cursor.getColumnIndexOrThrow(AutoCompleteFields.PROFILES_NAME)));
+        }while(cursor.moveToNext());
+
+        return profileNameArray;
+    }
+    public HashMap<String, String> getDegreesNamesForAutoComplete(){
+        HashMap<String, String> degreeAutoCompleteMap = new HashMap<String, String>();
+        String id = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query_params = "SELECT " + AutoCompleteFields.DEGREES_IDSERVERDB +", " + AutoCompleteFields.DEGREES_NAME + " FROM " + AutoCompleteFields.TABLE_DEGREES +";";
+        Cursor cursor = db.rawQuery(query_params, null);
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return degreeAutoCompleteMap;
+        }
+
+        cursor.moveToFirst();
+
+        do{
+            id = cursor.getString(cursor.getColumnIndexOrThrow(AutoCompleteFields.DEGREES_ID));
+            degreeAutoCompleteMap.put(id, cursor.getString(cursor.getColumnIndexOrThrow(AutoCompleteFields.DEGREES_NAME)));
+            id = null;
+        }while(cursor.moveToNext());
+
+        return degreeAutoCompleteMap;
+    }
 }
