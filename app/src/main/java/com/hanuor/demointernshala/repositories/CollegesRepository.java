@@ -152,9 +152,7 @@ public class CollegesRepository extends AutoCompleteDatabase{
             cursor.close();
             return degreeAutoCompleteMap;
         }
-
         cursor.moveToFirst();
-
         do{
             id = cursor.getString(cursor.getColumnIndexOrThrow(AutoCompleteFields.DEGREES_ID));
             degreeAutoCompleteMap.put(id, cursor.getString(cursor.getColumnIndexOrThrow(AutoCompleteFields.DEGREES_NAME)));
