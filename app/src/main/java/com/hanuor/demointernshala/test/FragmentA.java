@@ -15,6 +15,7 @@ package com.hanuor.demointernshala.test;/*
  */
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,7 +42,7 @@ import java.util.ArrayList;
 
 public class FragmentA extends android.support.v4.app.Fragment {
 
-
+    Button dynamic;
     private ArrayList<AutoCompleteModel> autoCompleteModels;
     private String url = "https://test.internshala.com/json/student/get_autocomplete_data/college";
     private String newUrl = "https://test.internshala.com/json/autocomplete/syncDataOnApp";
@@ -53,10 +54,16 @@ public class FragmentA extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.tabone, container, false);
+        View v = inflater.inflate(R.layout.tabone, container, false);
         begin = (Button) v.findViewById(R.id.begin);
-
-
+        dynamic = (Button) v.findViewById(R.id.dynamic);
+        dynamic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startMe = new Intent(getActivity(), DynamicNavigationDrawer.class);
+                getContext().startActivity(startMe);
+            }
+        });
         begin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,9 +71,10 @@ public class FragmentA extends android.support.v4.app.Fragment {
 
             }
         });
-                return v;
+        return v;
     }
-    public void sendData(){
+
+    public void sendData() {
 
         StringRequest strReq = new StringRequest(Request.Method.GET,
                 newUrl, new com.android.volley.Response.Listener<String>() {
@@ -78,9 +86,9 @@ public class FragmentA extends android.support.v4.app.Fragment {
                     JSONObject jsonObject = new JSONObject(response.toString());
                     JSONObject jsonArray = jsonObject.getJSONObject("collegesData");
                     JSONArray jArray = jsonArray.getJSONArray("activeColleges");
-                    for(int i = 0;i< jArray.length(); i++){
+                    for (int i = 0; i < jArray.length(); i++) {
                         JSONObject jObj = jArray.getJSONObject(i);
-                        autoCompleteModels.add(new AutoCompleteModel(i,Integer.valueOf(jObj.getString("id")), jObj.getString("name"), jObj.getString("status") ));
+                        autoCompleteModels.add(new AutoCompleteModel(i, Integer.valueOf(jObj.getString("id")), jObj.getString("name"), jObj.getString("status")));
                     }
                     new AutoCompleteDatabase(getContext());
                     CollegesRepository collegesRepository = new CollegesRepository(getContext());
@@ -94,7 +102,7 @@ public class FragmentA extends android.support.v4.app.Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Roar  Volley  "," Error");
+                Log.d("Roar  Volley  ", " Error");
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());

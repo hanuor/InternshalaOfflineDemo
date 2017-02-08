@@ -15,16 +15,26 @@ package com.hanuor.demointernshala.test;/*
  */
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.hanuor.demointernshala.R;
 
 public class FragmentB extends android.support.v4.app.Fragment {
+    private String[] mPlanetTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragmentui, container, false);
+        View view = inflater.inflate(R.layout.tabtwo, container, false);
+
+        return view;
     }
+
+
+
 }
